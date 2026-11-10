@@ -161,7 +161,7 @@ code {
   padding: 0.1em 0.35em;
   border-radius: 4px;
   background-color: #efebe4;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 pre {
@@ -179,7 +179,7 @@ pre code {
   padding: 0;
   background: none;
   font-size: inherit;
-  overflow-wrap: normal;
+  white-space: inherit;
 }
 
 pre ::selection {
