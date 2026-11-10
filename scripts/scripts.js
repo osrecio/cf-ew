@@ -176,6 +176,22 @@ function decorateCodeBlocks(main) {
 }
 
 /**
+ * Opens links to other origins in a new tab.
+ * @param {HTMLElement} main The main container element
+ */
+function decorateExternalLinks(main) {
+  main.querySelectorAll('a[href]').forEach((a) => {
+    try {
+      if (new URL(a.href, window.location).origin === window.location.origin) return;
+    } catch {
+      return;
+    }
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -187,6 +203,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateButtons(main);
   decorateCodeBlocks(main);
+  decorateExternalLinks(main);
 }
 
 /**
