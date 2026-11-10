@@ -5,20 +5,85 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
+  isolation: isolate;
+  padding: 56px 24px 64px;
   min-height: 300px;
+  background-color: var(--ink-surface);
+  color: var(--ink-muted);
+  overflow: hidden;
+}
+
+/* faint edge-grid, fading out towards the copy */
+.hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 14%) 1px, transparent 0);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(100deg, transparent 35%, #000 85%);
+}
+
+.hero > div {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  max-width: 16ch;
+  margin-top: 0.4em;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent-color);
+}
+
+.hero p {
+  max-width: 58ch;
+  font-size: var(--body-font-size-m);
+}
+
+.hero code {
+  background-color: rgb(255 255 255 / 9%);
+  color: var(--ink-text);
+}
+
+.hero p.button-wrapper {
+  display: inline-block;
+  margin: 24px 12px 0 0;
+}
+
+.hero a.button.primary {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--ink-surface);
+}
+
+.hero a.button.primary:hover,
+.hero a.button.primary:focus-visible {
+  border-color: var(--ink-accent);
+  background-color: var(--ink-accent);
+  color: var(--ink-surface);
+}
+
+.hero a.button.secondary {
+  border-color: rgb(255 255 255 / 40%);
+  color: #fff;
+}
+
+.hero a.button.secondary:hover,
+.hero a.button.secondary:focus-visible {
+  border-color: #fff;
+  background-color: rgb(255 255 255 / 8%);
+  color: #fff;
 }
 
 .hero picture {
   position: absolute;
-  z-index: -1;
+  z-index: -2;
   inset: 0;
   object-fit: cover;
   box-sizing: border-box;
@@ -32,6 +97,6 @@
 
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    padding: 96px 32px 104px;
   }
 }

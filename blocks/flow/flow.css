@@ -1,0 +1,124 @@
+.flow {
+  position: relative;
+  margin-top: 32px;
+}
+
+.flow .flow-steps {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flow .flow-steps > li {
+  position: relative;
+  padding-left: 40px;
+}
+
+/* node marker */
+.flow .flow-steps > li::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  left: 0;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--text-color);
+  border-radius: 50%;
+  background-color: var(--background-color);
+}
+
+.flow .flow-steps > li:first-child::before {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+}
+
+.flow .flow-title {
+  margin: 0;
+  font-size: var(--heading-font-size-xs);
+}
+
+.flow .flow-body {
+  color: var(--dark-color);
+  font-size: var(--body-font-size-s);
+}
+
+.flow .flow-body p {
+  margin: 0.4em 0 0;
+}
+
+/* connectors: per step on narrow screens, one animated track on wide ones */
+.flow .flow-steps > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  bottom: -34px;
+  left: 7px;
+  width: 2px;
+  background-color: var(--rule-color);
+}
+
+.flow .flow-track {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .flow .flow-steps {
+    grid-template-columns: repeat(var(--flow-count, 4), minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .flow .flow-steps > li {
+    padding: 36px 0 0;
+  }
+
+  .flow .flow-steps > li::before {
+    top: 0;
+  }
+
+  .flow .flow-steps > li:not(:last-child)::after {
+    display: none;
+  }
+
+  .flow .flow-track {
+    position: absolute;
+    display: block;
+    top: 7px;
+    left: 8px;
+    right: calc((100% - (var(--flow-count, 4) - 1) * 32px) / var(--flow-count, 4) - 8px);
+    height: 2px;
+    background-color: var(--rule-color);
+  }
+
+  .flow .flow-packet {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgb(243 128 32 / 45%);
+    opacity: 0;
+  }
+
+  .flow.is-running .flow-packet {
+    animation: flow-packet-across 4.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+}
+
+@keyframes flow-packet-across {
+  0% { left: 0; opacity: 0; }
+  8% { opacity: 1; }
+  62% { left: calc(100% - 10px); opacity: 1; }
+  72%, 100% { left: calc(100% - 10px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow.is-running .flow-packet {
+    animation: none;
+  }
+}

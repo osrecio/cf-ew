@@ -12,16 +12,23 @@
 
 :root {
   /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --background-color: #fff;
+  --light-color: #f6f4f0;
+  --dark-color: #4a4f59;
+  --text-color: #15171c;
+  --link-color: #a13f08;
+  --link-hover-color: #7e3006;
+  --accent-color: #f38020;
+  --rule-color: #e4e0d8;
+  --ink-surface: #15171c;
+  --ink-text: #e7e9ee;
+  --ink-muted: #c9ced8;
+  --ink-accent: #ffb070;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --code-font-family: ui-monospace, sfmono-regular, menlo, consolas, monospace;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -84,6 +91,20 @@ body.appear {
   display: block;
 }
 
+::selection {
+  background-color: #fcd9b8;
+  color: var(--text-color);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+html {
+  scrollbar-color: #c4beb3 var(--light-color);
+}
+
 header {
   height: var(--nav-height);
 }
@@ -109,6 +130,7 @@ h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
+  text-wrap: balance;
   scroll-margin: 40px;
 }
 
@@ -131,15 +153,38 @@ blockquote {
 
 code,
 pre {
-  font-size: var(--body-font-size-s);
+  font-family: var(--code-font-family);
+  font-size: var(--body-font-size-xs);
+}
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background-color: #efebe4;
+  overflow-wrap: anywhere;
 }
 
 pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
+  padding: 18px 20px;
+  border-radius: 10px;
+  background-color: var(--ink-surface);
+  color: var(--ink-text);
+  line-height: 1.55;
   overflow-x: auto;
   white-space: pre;
+  scrollbar-color: #4a4f59 var(--ink-surface);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+  overflow-wrap: normal;
+}
+
+pre ::selection {
+  background-color: #6b3a14;
+  color: #fff;
 }
 
 main > div {
@@ -163,6 +208,8 @@ a:any-link {
 a:hover {
   color: var(--link-hover-color);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 /* buttons */
@@ -322,4 +369,67 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* how-to: numbered steps authored as h3 + text + code */
+main .section.how-to {
+  margin: 0;
+  padding: 56px 0 72px;
+  background-color: var(--light-color);
+}
+
+main .section.how-to .default-content-wrapper {
+  counter-reset: step;
+}
+
+main .section.how-to .default-content-wrapper > :is(p, pre, ul, ol) {
+  max-width: 72ch;
+}
+
+main .section.how-to h3 {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 1.6em;
+  font-size: var(--heading-font-size-s);
+}
+
+main .section.how-to h3::before {
+  counter-increment: step;
+  content: counter(step);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+main .section.how-to h3 ~ :is(p, pre, ul) {
+  margin-left: 46px;
+}
+
+@media (width < 600px) {
+  main .section.how-to h3 ~ :is(p, pre, ul) {
+    margin-left: 0;
+  }
+}
+
+/* links: compact reference list */
+main .section.links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  padding: 0;
+  list-style: none;
+}
+
+main .section.links li {
+  font-size: var(--body-font-size-s);
 }
