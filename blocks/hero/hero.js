@@ -62,7 +62,11 @@ async function inspect(receipt, button) {
         ...row('Cloudflare', text('No pasa por aquí', 'pill is-off')),
         ...row('Tiempo', text(`${elapsed} ms`)),
       );
-      note.textContent = 'Estás en el origen de AEM. Abre cf-ew.osrecio.com para ver la respuesta de Cloudflare.';
+      const { hostname } = window.location;
+      let where = 'Esta petición';
+      if (hostname.endsWith('.aem.page')) where = 'Estás en la preview de AEM (aem.page) y esta petición';
+      else if (hostname.endsWith('.aem.live')) where = 'Estás en el origen de AEM (aem.live) y esta petición';
+      note.textContent = `${where} no pasa por Cloudflare. Abre cf-ew.osrecio.com para ver la respuesta de Cloudflare.`;
       return;
     }
 
