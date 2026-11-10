@@ -1,9 +1,12 @@
-# Your Project's Title...
-Your project's description...
+# cf-ew
+AEM Edge Delivery Services site authored in Experience Workspace and served through a Cloudflare Worker (BYO CDN) at https://cf-ew.osrecio.com/.
 
 ## Environments
+- Production (Cloudflare): https://cf-ew.osrecio.com/
 - Preview: https://main--cf-ew--osrecio.aem.page/
-- Live: https://main--cf-ew--osrecio.aem.live/
+- Live (origin): https://main--cf-ew--osrecio.aem.live/
+
+The Cloudflare Worker project lives in [`cloudflare-worker/`](cloudflare-worker/).
 
 ## Documentation
 
