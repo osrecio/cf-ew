@@ -11,17 +11,25 @@
  */
 
 :root {
+  color-scheme: dark;
+
   /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --background-color: #0c0d10;
+  --light-color: #14161b;
+  --surface-color: #1b1e24;
+  --dark-color: #a7acb5;
+  --text-color: #eeebe6;
+  --link-color: #ff9d52;
+  --link-hover-color: #ffc08f;
+  --accent-color: #f38020;
+  --ok-color: #3ecf8e;
+  --rule-color: #262930;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --display-font-family: archivo-expanded, archivo-expanded-fallback, sans-serif;
+  --code-font-family: ui-monospace, sfmono-regular, menlo, consolas, monospace;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -45,6 +53,12 @@
   font-family: roboto-condensed-fallback;
   size-adjust: 88.82%;
   src: local('Arial');
+}
+
+@font-face {
+  font-family: archivo-expanded-fallback;
+  size-adjust: 118%;
+  src: local('Arial Bold'), local('Arial');
 }
 
 @font-face {
@@ -84,6 +98,20 @@ body.appear {
   display: block;
 }
 
+::selection {
+  background-color: #7a3a0c;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+html {
+  scrollbar-color: #3a3e47 var(--background-color);
+}
+
 header {
   height: var(--nav-height);
 }
@@ -109,7 +137,16 @@ h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
+  text-wrap: balance;
   scroll-margin: 40px;
+}
+
+h1,
+h2 {
+  font-family: var(--display-font-family);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 h1 { font-size: var(--heading-font-size-xxl); }
@@ -131,16 +168,38 @@ blockquote {
 
 code,
 pre {
-  font-size: var(--body-font-size-s);
+  font-family: var(--code-font-family);
+  font-size: var(--body-font-size-xs);
+}
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background-color: var(--surface-color);
+  color: #f3d9c2;
+  white-space: nowrap;
 }
 
 pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
+  padding: 18px 20px;
+  border: 1px solid var(--rule-color);
+  border-radius: 12px;
+  background-color: #08090b;
+  color: var(--text-color);
+  line-height: 1.55;
   overflow-x: auto;
   white-space: pre;
+  scrollbar-color: #3a3e47 #08090b;
 }
+
+pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  white-space: inherit;
+}
+
 
 main > div {
   margin: 40px 16px;
@@ -163,6 +222,8 @@ a:any-link {
 a:hover {
   color: var(--link-hover-color);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 /* buttons */
@@ -297,7 +358,7 @@ main img {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: 96px 0;
 }
 
 main > .section > div {
@@ -308,6 +369,15 @@ main > .section > div {
 
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+main > .section > .default-content-wrapper > h2:first-child {
+  margin-top: 0;
+}
+
+main > .section > .default-content-wrapper > h2 + p {
+  max-width: 60ch;
+  color: var(--dark-color);
 }
 
 @media (width >= 900px) {
@@ -322,4 +392,118 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* how-to: numbered steps authored as h3 + text + code */
+main .section.how-to {
+  margin: 0;
+  padding: 96px 0 112px;
+  border-top: 1px solid var(--rule-color);
+  border-bottom: 1px solid var(--rule-color);
+  background-color: var(--light-color);
+}
+
+main .section.how-to .default-content-wrapper {
+  counter-reset: step;
+}
+
+main .section.how-to .default-content-wrapper > :is(p, .code-block, ul, ol) {
+  max-width: 76ch;
+}
+
+main .section.how-to h3 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 2em;
+  font-size: var(--heading-font-size-s);
+}
+
+main .section.how-to h3::before {
+  counter-increment: step;
+  content: counter(step);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  font-family: var(--display-font-family);
+  font-size: 17px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+main .section.how-to h3 ~ :is(p, .code-block, ul) {
+  margin-left: 56px;
+}
+
+@media (width < 600px) {
+  main .section.how-to h3 ~ :is(p, .code-block, ul) {
+    margin-left: 0;
+  }
+}
+
+/* code blocks with copy button */
+.code-block {
+  position: relative;
+  margin-top: 0.8em;
+}
+
+.code-block pre {
+  margin: 0;
+  padding-right: 96px;
+}
+
+.code-block .code-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 12px;
+  border: 1px solid var(--rule-color);
+  border-radius: 999px;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.code-block .code-copy:hover {
+  border-color: var(--dark-color);
+  color: var(--text-color);
+}
+
+.code-block .code-copy.is-copied {
+  border-color: var(--ok-color);
+  color: var(--ok-color);
+}
+
+/* links: reference chips */
+main .section.links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+main .section.links li a:any-link {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid var(--rule-color);
+  border-radius: 999px;
+  color: var(--text-color);
+  font-size: var(--body-font-size-xs);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+main .section.links li a:hover {
+  border-color: var(--accent-color);
+  color: var(--link-hover-color);
+  text-decoration: none;
 }

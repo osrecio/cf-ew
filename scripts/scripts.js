@@ -143,6 +143,39 @@ function decorateButtons(main) {
 }
 
 /**
+ * Wraps code blocks and adds a copy-to-clipboard button.
+ * @param {HTMLElement} main The main container element
+ */
+function decorateCodeBlocks(main) {
+  main.querySelectorAll('pre').forEach((pre) => {
+    if (pre.parentElement.classList.contains('code-block')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    pre.replaceWith(wrapper);
+    wrapper.append(pre);
+    if (!navigator.clipboard) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'code-copy';
+    button.textContent = 'Copiar';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.textContent.trim());
+        button.textContent = 'Copiado';
+        button.classList.add('is-copied');
+      } catch {
+        button.textContent = 'No se pudo copiar';
+      }
+      setTimeout(() => {
+        button.textContent = 'Copiar';
+        button.classList.remove('is-copied');
+      }, 1800);
+    });
+    wrapper.append(button);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -153,6 +186,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateCodeBlocks(main);
 }
 
 /**
