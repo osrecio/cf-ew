@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "aem-cf-ew-worker",
+  "version": "1.0.0",
+  "description": "AEM Edge Delivery BYO CDN worker for cf-ew.osrecio.com",
+  "type": "module",
+  "license": "Apache-2.0",
+  "allowScripts": {
+    "workerd": true,
+    "esbuild": true,
+    "sharp": true
+  },
+  "devDependencies": {
+    "cf": "^1.0.0-beta.29",
+    "wrangler": "^4.160.0"
+  }
+}

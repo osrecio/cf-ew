@@ -1,6 +1,6 @@
 .flow {
   position: relative;
-  margin-top: 32px;
+  margin-top: 48px;
 }
 
 .flow .flow-steps {
@@ -38,7 +38,7 @@
 
 .flow .flow-title {
   margin: 0;
-  font-size: var(--heading-font-size-xs);
+  font-size: var(--heading-font-size-s);
 }
 
 .flow .flow-body {
@@ -101,8 +101,18 @@
     height: 10px;
     border-radius: 50%;
     background-color: var(--accent-color);
-    box-shadow: 0 2px 8px rgb(243 128 32 / 45%);
     opacity: 0;
+  }
+
+  /* comet tail behind the packet */
+  .flow .flow-packet::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    width: 120px;
+    height: 2px;
+    background-image: linear-gradient(90deg, transparent, var(--accent-color));
   }
 
   .flow.is-running .flow-packet {
