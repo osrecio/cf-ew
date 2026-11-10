@@ -32,7 +32,7 @@
 .hero h1 {
   max-width: 14ch;
   margin: 0;
-  font-size: clamp(40px, 6.4vw, 92px);
+  font-size: clamp(40px, 5.8vw, 84px);
   line-height: 0.98;
   letter-spacing: -0.03em;
 }
@@ -106,7 +106,7 @@
 .hero .hero-receipt dl {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 0 16px;
+  gap: 0;
   min-height: 190px;
   margin: 0;
   font-size: var(--body-font-size-xs);
@@ -124,6 +124,7 @@
 }
 
 .hero .hero-receipt dt {
+  padding-right: 16px;
   color: var(--dark-color);
 }
 
